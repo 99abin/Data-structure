@@ -14,7 +14,7 @@ class linkedlist:
     def insert_rear(self, data):
         if self.head == None:
             newnode = node(data, None)
-            return
+            self.head = newnode
         else:
             itr = self.head
             while itr.next != None:
@@ -25,7 +25,6 @@ class linkedlist:
     def insert_at(self, index, data):
         if self.head == None:
             newnode = node(data, None)
-            return
         else: 
             itr = self.head
             count = 1
@@ -34,7 +33,6 @@ class linkedlist:
                 count += 1
             if itr == None:
                 insert_rear(data)
-                return
             else:
                 newnode = node(data, itr.next)
                 itr.next = newnode
@@ -42,7 +40,6 @@ class linkedlist:
     def delete_at(self, index):
         if self.head == None:
             return
-        
         itr = self.head
         count = 1
         while count != index and itr != None:
@@ -56,7 +53,6 @@ class linkedlist:
     def length(self):
         if self.head == None:
             print('linkedlist is empty')
-            return
         else :
             itr = self.head
             count = 0
@@ -68,7 +64,6 @@ class linkedlist:
     def print(self):
         if self.head == None:
             print('linkedlist is empty')
-            return
         else:
             itr = self.head
             llstr = ' '
