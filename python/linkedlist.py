@@ -73,9 +73,9 @@ class linkedlist:
             itr = self.head
             llstr = ' '
             while itr != None:
-                llstr += str(itr.data) + '--->'
+                llstr += '[' + str(itr.data) + ']' + '--->'
                 itr = itr.next
-            print(llstr + 'None')
+            print(llstr + '[NULL]')
             
 # -----MAIN-----
 ll = linkedlist()
