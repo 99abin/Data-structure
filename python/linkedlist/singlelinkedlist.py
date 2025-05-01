@@ -24,35 +24,38 @@ class linkedlist:
     
     def insert_at(self, index, data):
         if self.head == None:
-            newnode = node(data, None)
+            print("index didn't exist")
         else: 
+            if index == 0:
+                self.insert_front(data)
             itr = self.head
             count = 1
             while count != index and itr != None:
                 itr = itr.next
                 count += 1
             if itr == None:
-                insert_rear(data)
+                print("index didn't exist")
             else:
                 newnode = node(data, itr.next)
                 itr.next = newnode
     
     def delete_at(self, index):
         if self.head == None:
-            return
-        itr = self.head
-        count = 1
-        while count != index and itr != None:
-            itr = itr.next
-            count += 1
-        if itr == None:
-            return
+            print("index didn't exist")
         else:
-            itr.next = itr.next.next
+            itr = self.head
+            count = 1
+            while count != index and itr != None:
+                itr = itr.next
+                count += 1
+            if itr == None:
+                print("index didn't exist")
+            else:
+                itr.next = itr.next.next
             
     def length(self):
         if self.head == None:
-            print('linkedlist is empty')
+            print('0')
         else :
             itr = self.head
             count = 0
