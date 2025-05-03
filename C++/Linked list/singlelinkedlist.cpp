@@ -85,9 +85,9 @@ void delete_at(int index) {
     if (size() < index + 1) {
         cout << "Index didn't exist\n";
     } else if (index == 0) {
-        node* temp = head;
+        node* temp = head->next;
         head->next == NULL;
-        head = temp->next;
+        head = temp-;
     } else if (index == size() - 1) {
         node* itr = head;
         while (itr->next != tail) {
