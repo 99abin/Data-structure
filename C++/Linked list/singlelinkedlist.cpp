@@ -13,7 +13,7 @@ node* create_node(int data);
 void insert_front(int data);
 void insert_rear(int data);
 void insert_at(int index, int data);
-void delete_at(int index, int data);
+void delete_at(int index);
 int size();
 void print();
 
@@ -22,6 +22,7 @@ int main() {
     insert_front(9);
     insert_rear(7);
     insert_at(2, 10);
+    delete_at(2);
     
     print();
     cout << "size: " << size() << "\n";
@@ -80,7 +81,7 @@ void insert_at(int index, int data) {
     }
 }
 
-void delete_at(int index, int data) {
+void delete_at(int index) {
     if (size() < index + 1) {
         cout << "Index didn't exist\n";
     } else if (index == 0) {
