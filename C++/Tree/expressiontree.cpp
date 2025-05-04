@@ -15,8 +15,8 @@ node* root = NULL;
 stack<int> operand;
 
 node* create_node(string data);
-void delete_leaf(string val);
-void insert_child(string val, string lr, string data);
+void delete_leaf(string lval);
+void insert_child(string pval, string dir, string data);
 void post_order(node* temp);
 int post_fix(node* temp);
 
@@ -43,10 +43,10 @@ node* create_node(string data) {
     return newnode;
 }
 
-void delete_leaf(string val) {
+void delete_leaf(string lval) {
     if (root == NULL) {
         cout << "Tree is empty\n";
-    } else if (root->data == val) {
+    } else if (root->data == lval) {
         cout << "This node isn't leaf\n";
     }
     queue<node*> q;
@@ -55,24 +55,24 @@ void delete_leaf(string val) {
         node* temp = q.front();
         q.pop();
         if (temp->left != NULL) {
-            if (temp->left->data == val && temp->left->left == NULL && temp->left->right == NULL) {
+            if (temp->left->data == lval && temp->left->left == NULL && temp->left->right == NULL) {
                 temp->left = NULL;
                 return;
             }
             q.push(temp->left);
         }
         if (temp->right != NULL) {
-            if (temp->right->data == val && temp->right->left == NULL && temp->right->right == NULL) {
+            if (temp->right->data == lval && temp->right->left == NULL && temp->right->right == NULL) {
                 temp->right = NULL;
                 return;
             }
             q.push(temp->right);
         }
     }
-    cout << "Node with value " << val << " not found\n";
+    cout << "Node with value " << lval << " not found\n";
 }
 
-void insert_child(string val, string lr, string data) {
+void insert_child(string pval, string dir, string data) {
     if (root == NULL) {
         cout << "Tree is empty\n";
         return;
@@ -83,7 +83,7 @@ void insert_child(string val, string lr, string data) {
     while (!q.empty()) {
         node* temp = q.front();
         q.pop();
-        if (temp->data == val) {
+        if (temp->data == pval) {
             point = temp;
             break;
         }
@@ -95,16 +95,16 @@ void insert_child(string val, string lr, string data) {
         }
     }
     if (point == NULL) {
-        cout << "Node with value " << val << " not found\n";
+        cout << "Node with value " << pval << " not found\n";
         return;
     }
-    if (lr == "left") {
+    if (dir == "left") {
         if (point->left != NULL) {
             cout << "Left child already exists\n";
         } else {
             point->left = create_node(data);
         }
-    } else if (lr == "right") {
+    } else if (dir == "right") {
         if (point->right != NULL) {
             cout << "Right child already exists\n";
         } else {
