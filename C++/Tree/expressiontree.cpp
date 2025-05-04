@@ -1,6 +1,7 @@
 #include <iostream>
 #include <queue>
 #include <string>
+#include <stack>
 #include <cctype>
 using namespace std;
 
@@ -11,6 +12,7 @@ struct node {
 };
 
 node* root = NULL;
+stack<int> operand;
 
 node* create_node(string data);
 void delete_leaf(string val);
@@ -122,37 +124,39 @@ void post_order(node* temp) {
     cout << "[" << temp->data << "]";
 }
 
-
 int post_fix(node* temp) {
     if (temp == NULL) {
         return 0;
     }
     
-    int left_val = post_fix(temp->left);
-    int right_val = post_fix(temp->right);
+    post_fix(temp->left);
+    post_fix(temp->right);
     
-    bool isDigit = true;
+    bool digit = true;
     for (char c : temp->data) {
         if (!isdigit(c)) {
-            isDigit = false;
-            break;
+            digit = false;
+        }
+    }
+    if (digit == true) {
+        operand.push(stoi(temp->data));
+    } else {
+        int val2 = operand.top();
+        operand.pop();
+        int val1 = operand.top();
+        operand.pop();
+        if (temp->data == "+") {
+            operand.push(val1 + val2);
+        } else if (temp->data == "-") {
+            operand.push(val1 - val2);
+        } else if (temp->data == "*") {
+            operand.push(val1 * val2);
+        } else if (temp->data == "/") {
+            operand.push(val1 / val2);
+        } else {
+            cout << "invalid operator\n";
         }
     }
     
-    if (isDigit) {
-        return stoi(temp->data);
-    } else {
-        if (temp->data == "+") {
-            return left_val + right_val;
-        } else if (temp->data == "-") {
-            return left_val - right_val;
-        } else if (temp->data == "*") {
-            return left_val * right_val;
-        } else if (temp->data == "/") {
-            return left_val / right_val;
-        } else {
-            cout << "Invalid operator: " << temp->data << endl;
-            return 0;
-        }
-    }
+    return operand.top();
 }
