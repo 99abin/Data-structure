@@ -13,7 +13,6 @@ node* root = NULL;
 
 node* create_node(int data);
 void delete_leaf(int val);
-node* node_pointer(int val);
 void insert_child(int val, string lr, int data);
 void post_order(node* temp);
 
@@ -23,6 +22,7 @@ int main() {
     insert_child(5, "right", 7);
     insert_child(3, "left", 4);
     insert_child(7, "left", 8);
+    insert_child(7, "right", 2);
     
     post_order(root);
     return 0;
@@ -67,41 +67,43 @@ void delete_leaf(int val) {
     cout << "Node with value " << val << " not found\n";
 }
 
-node* node_pointer(int val) {
+void insert_child(int val, string lr, int data) {
     if (root == NULL) {
         cout << "Tree is empty\n";
-        return NULL;
+        return;
     }
     queue<node*> q;
     q.push(root);
+    node* point = NULL;
     while (!q.empty()) {
         node* temp = q.front();
         q.pop();
         if (temp->data == val) {
-            return temp;
+            point = temp;
+            break;
         }
         if (temp->left != NULL) {
             if (temp->left->data == val) {
-                return temp->left;
+                point = temp->left;
+                break;
             }
             q.push(temp->left);
         }
         if (temp->right != NULL) {
             if (temp->right->data == val) {
-                return temp->right;
+                point = temp->right;
+                break;
             }
             q.push(temp->right);
         }
     }
-    cout << "Node with value " << val << " not found\n";
-    return NULL;
-}
-
-void insert_child(int val, string lr, int data) {
+    if (point == NULL) {
+        cout << "Node with value " << val << " not found\n";
+    }
     if (lr == "left") {
-        node_pointer(val)->left = create_node(data);
-    } else if(lr == "right") {
-        node_pointer(val)->right = create_node(data);
+        point->left = create_node(data);
+    } else if (lr == "right") {
+        point->right = create_node(data);
     }
 }
 
