@@ -11,7 +11,7 @@ struct node {
 node* root = NULL;
 
 node* create_node(int data);
-void delete_leaf_node(int val);
+void delete_leaf(int val);
 node* node_pointer(int val);
 void post_order(node* temp);
 
@@ -20,6 +20,7 @@ int main() {
     node_pointer(5)->left = create_node(3);
     node_pointer(5)->right = create_node(7);
     node_pointer(3)->left = create_node(4);
+    delete_leaf(7);
     
     post_order(root);
     return 0;
@@ -33,6 +34,35 @@ node* create_node(int data) {
         root = newnode;
     }
     return newnode;
+}
+
+void delete_leaf(int val) {
+    if (root == NULL) {
+        cout << "Tree is empty\n";
+    } else if (root->data == val) {
+        cout << "This node isn't leaf\n";
+    }
+    queue<node*> q;
+    q.push(root);
+    while (!q.empty()) {
+        node* temp = q.front();
+        q.pop();
+        if (temp->left != NULL) {
+            if (temp->left->data == val && temp->left->left == NULL && temp->left->right == NULL) {
+                temp->left = NULL;
+                return;
+            }
+            q.push(temp->left);
+        }
+        if (temp->right != NULL) {
+            if (temp->right->data == val && temp->right->left == NULL && temp->right->right == NULL) {
+                temp->right = NULL;
+                return;
+            }
+            q.push(temp->right);
+        }
+    }
+    cout << "Node with value " << val << " not found\n";
 }
 
 node* node_pointer(int val) {
