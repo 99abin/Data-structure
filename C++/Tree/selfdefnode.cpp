@@ -10,42 +10,67 @@ struct node {
 
 node* root = NULL;
 
-void create_node(int data);
-node* nodepointer(int val);
+node* create_node(int data);
+void delete_leaf_node(int val);
+node* node_pointer(int val);
+void post_order(node* temp);
 
 int main() {
-    // Write C++ code here
-    std::cout << "Try programiz.pro";
-
+    create_node(5);
+    node_pointer(5)->left = create_node(3);
+    node_pointer(5)->right = create_node(7);
+    node_pointer(3)->left = create_node(4);
+    
+    post_order(root);
     return 0;
 }
 
-void create_node(int data) {
+node* create_node(int data) {
     node* newnode = (node*)malloc(sizeof(node));
     newnode->data = data;
     newnode->left = newnode->right = NULL;
+    if (root == NULL) {
+        root = newnode;
+    }
+    return newnode;
 }
 
-node* nodepointer(int val) {
-    if (root != NULL) {
-        cout << "node didn't exist\n";
-    } else {
-        queue<node*> q;
-        q.push(root);
-        while (q.front()->data != val) {
-            if (q.front()->left->data == val) {
-                return q.front()->left;
-            } else {
-                q.push(q.front()->left);
+node* node_pointer(int val) {
+    if (root == NULL) {
+        cout << "Tree is empty\n";
+        return NULL;
+    }
+    queue<node*> q;
+    q.push(root);
+    while (!q.empty()) {
+        node* temp = q.front();
+        q.pop();
+        if (temp->data == val) {
+            return temp;
+        }
+        if (temp->left != NULL) {
+            if (temp->left->data == val) {
+                return temp->left;
             }
-            if (q.front()->right->data == val) {
-                return q.front()->right;
-            } else {
-                q.push(q.front()->right);
+            q.push(temp->left);
+        }
+        if (temp->right != NULL) {
+            if (temp->right->data == val) {
+                return temp->right;
             }
-            q.pop();
+            q.push(temp->right);
         }
     }
-    cout << "node didn't exist\n";
+    cout << "Node with value " << val << " not found\n";
     return NULL;
+}
+
+void post_order(node* temp) {
+    if (temp == NULL) {
+        return;
+    } else {
+        post_order(temp->left);
+        post_order(temp->right);
+        cout << "[" << temp->data << "]";
+    }
 }
