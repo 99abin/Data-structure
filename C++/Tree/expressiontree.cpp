@@ -1,7 +1,7 @@
 #include <iostream>
 #include <queue>
-#include <string>
 #include <stack>
+#include <string>
 #include <cctype>
 using namespace std;
 
